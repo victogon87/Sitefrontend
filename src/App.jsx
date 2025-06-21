@@ -36,13 +36,13 @@ const AppContent = () => {
   useEffect(() => {
     if (isAuthenticated) {
       // Fetch para pegar dados de secretarias
-      fetch('https://site-qwau.onrender.com')
+      fetch('https://site-qwau.onrender.com/api/secretarias')
         .then((response) => response.json())
         .then((data) => setSecretarias(data.secretarias))
         .catch((error) => console.error('Erro ao carregar secretarias:', error));
 
       // Fetch para pegar dados de projetos
-      fetch('https://site-qwau.onrender.com')
+      fetch('https://site-qwau.onrender.com/api/projetos')
         .then((response) => response.json())
         .then((data) => setProjetos(data.projetos))
         .catch((error) => console.error('Erro ao carregar projetos:', error));
