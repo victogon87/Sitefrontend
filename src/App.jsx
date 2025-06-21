@@ -35,17 +35,30 @@ const AppContent = () => {
   // Carregar secretarias e projetos do backend
   useEffect(() => {
     if (isAuthenticated) {
-      // Fetch para pegar dados de secretarias
-      fetch('https://site-qwau.onrender.com/api/secretarias')
-        .then((response) => response.json())
-        .then((data) => setSecretarias(data.secretarias))
-        .catch((error) => console.error('Erro ao carregar secretarias:', error));
+      const token = localStorage.getItem("token");  // Certifique-se de que o token está sendo armazenado após o login
+      if (token) {
+        // Fetch para pegar dados de secretarias
+        fetch('https://site-qwau.onrender.com/api/secretarias', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,  // Adicionando o token no cabeçalho de autorização
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setSecretarias(data.secretarias))
+          .catch((error) => console.error('Erro ao carregar secretarias:', error));
 
-      // Fetch para pegar dados de projetos
-      fetch('https://site-qwau.onrender.com/api/projetos')
-        .then((response) => response.json())
-        .then((data) => setProjetos(data.projetos))
-        .catch((error) => console.error('Erro ao carregar projetos:', error));
+        // Fetch para pegar dados de projetos
+        fetch('https://site-qwau.onrender.com/api/projetos', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,  // Adicionando o token no cabeçalho de autorização
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => setProjetos(data.projetos))
+          .catch((error) => console.error('Erro ao carregar projetos:', error));
+      }
     }
   }, [isAuthenticated]);
 
