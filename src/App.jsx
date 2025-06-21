@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Login from './components/Login';
@@ -29,6 +29,25 @@ const ProtectedRoute = ({ children }) => {
 // Componente principal da aplicação
 const AppContent = () => {
   const { isAuthenticated, loading } = useAuth();
+  const [secretarias, setSecretarias] = useState([]);
+  const [projetos, setProjetos] = useState([]);
+
+  // Carregar secretarias e projetos do backend
+  useEffect(() => {
+    if (isAuthenticated) {
+      // Fetch para pegar dados de secretarias
+      fetch('https://site-qwau.onrender.com/api/secretarias')
+        .then((response) => response.json())
+        .then((data) => setSecretarias(data.secretarias))
+        .catch((error) => console.error('Erro ao carregar secretarias:', error));
+
+      // Fetch para pegar dados de projetos
+      fetch('https://site-qwau.onrender.com/api/projetos')
+        .then((response) => response.json())
+        .then((data) => setProjetos(data.projetos))
+        .catch((error) => console.error('Erro ao carregar projetos:', error));
+    }
+  }, [isAuthenticated]);
 
   if (loading) {
     return (
@@ -51,7 +70,7 @@ const AppContent = () => {
         path="/" 
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Dashboard secretarias={secretarias} projetos={projetos} />
           </ProtectedRoute>
         } 
       />
@@ -59,7 +78,7 @@ const AppContent = () => {
         path="/secretarias" 
         element={
           <ProtectedRoute>
-            <Secretarias />
+            <Secretarias secretarias={secretarias} />
           </ProtectedRoute>
         } 
       />
@@ -67,7 +86,7 @@ const AppContent = () => {
         path="/projetos" 
         element={
           <ProtectedRoute>
-            <Projetos />
+            <Projetos projetos={projetos} />
           </ProtectedRoute>
         } 
       />
@@ -109,4 +128,3 @@ function App() {
 }
 
 export default App;
-
