@@ -95,7 +95,7 @@ const Login = () => {
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600 mb-2">Credenciais de teste:</p>
             <div className="text-xs space-y-1">
-              <p><strong>Admin:</strong> admin@secretaria.gov.br / admin123</p>
+              <p><strong>Admin:</strong> admin@secretaria.gov.br / 873879mv</p>
               <p><strong>Colaborador:</strong> joao@secretaria.gov.br / colaborador123</p>
               <p><strong>Visualizador:</strong> maria@secretaria.gov.br / visualizador123</p>
             </div>
